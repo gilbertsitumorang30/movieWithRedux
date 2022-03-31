@@ -11,9 +11,15 @@ import { logo } from '../../assets/images'
 import FontAwesomeIcon5 from 'react-native-vector-icons/FontAwesome5';
 import { Fumi } from 'react-native-textinput-effects';
 import { cekEmail, cekPassword } from '../../utils/Registrasi';
+import { useDispatch, useSelector } from 'react-redux';
+import { setRegister } from '../../actions';
 
 
 export default function Index(props) {
+
+  const dispatch = useDispatch()
+
+  const registerResult = useSelector(state => state.registerReducer.data)
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -59,7 +65,8 @@ export default function Index(props) {
         phone: '1-570-236-7033'
       };
       const res = await axios.post(`${fakeAPIBaseURL}/users`, body);
-      console.log(res)
+      dispatch(setRegister(res.data))
+      console.log(registerResult)
       setModalVisible(true)
 
     } catch (error) {

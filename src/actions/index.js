@@ -4,3 +4,10 @@ export const setListMovie = data => {
         payload: data
     }
 }
+
+export const setLogin = data => {
+    return {
+        type: "SET_LOGIN",
+        payload: data
+    }
+}

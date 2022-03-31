@@ -10,17 +10,21 @@ import colors from '../../res/colors';
 import { logo } from '../../assets/images'
 import FontAwesomeIcon5 from 'react-native-vector-icons/FontAwesome5';
 import { Fumi } from 'react-native-textinput-effects';
+import { useDispatch, useSelector } from 'react-redux';
+import { setLogin } from '../../actions';
 
 
 export default function Index(props) {
+
+  const dispatch = useDispatch()
+
+  const token = useSelector(state => state.loginReducer.token)
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [buttons, setButtons] = useState(true)
 
   const disable = (password, email) => {
-    console.log("password = ", password)
-    console.log("email = ", email)
     if (password.length < 1 || email.length < 1) {
       return true
     }
@@ -36,13 +40,14 @@ export default function Index(props) {
     // password: "83r5^_"
 
     try {
-      const body = await {
+      const body = {
         username: "mor_2314",
         password: "83r5^_",
       };
       const res = await axios.post(`${fakeAPIBaseURL}/auth/login`, body)
-      console.log(res.data.token)
       setModalVisible(true)
+      dispatch(setLogin(res.data.token))
+      console.log(token)
     } catch (error) {
       alert("Username Atau Password Salah")
       console.log("token : ", error)
